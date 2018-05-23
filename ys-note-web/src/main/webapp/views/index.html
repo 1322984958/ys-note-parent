@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<title>gkys-web</title>
+	<link rel="stylesheet" href="/wc-management-web/assets/libs/layui/css/layui.css" />
+	<link rel="stylesheet" href="/wc-management-web/assets/css/comment.css" />
+</head>
+
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<!-- 头部 -->
+		<div class="layui-header">
+			<div class="layui-logo layui-bg-cyan"><img src="/wc-management-web/assets/images/logo.png"/>gkys-web</div>
+			<ul class="layui-nav layui-layout-left">
+		      <li class="layui-nav-item"><a href="javascript:;" id="switchNav"><i class="layui-icon">&#xe668;</i></a></li>
+		    </ul>
+			<ul class="layui-nav layui-layout-right">
+				<li class="layui-nav-item">
+					<a href="javascript:;">
+						<img id="userHead" src="/wc-management-web/assets/images/head.jpg" class="layui-nav-img"><span id="userNickName"></span>
+					</a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a href="javascript:myInfo();"><i class="layui-icon">&#xe612;</i>&emsp;个人信息</a>
+						</dd>
+						<dd>
+							<a href="javascript:updatePsw();"><i class="layui-icon">&#xe631;</i>&emsp;修改密码</a>
+						</dd>
+						<dd>
+							<a href="javascript:loginOut();"><i class="layui-icon">&#xe66d;</i>&emsp;退出登录</a>
+						</dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+		<!-- 侧边栏 -->
+		<div class="layui-side layui-bg-cyan">
+			<div class="layui-side-scroll">
+				<ul class="layui-nav layui-nav-tree layui-bg-cyan" id="index-nav" lay-filter="index-nav" style="margin-top: 25px;">
+				</ul>
+			</div>
+		</div>
+		<!-- 主体部分 -->
+		<div class="layui-body" id="main-content" style="padding: 15px;">
+			
+		</div>
+		<!-- 底部 -->
+		<div class="layui-footer">
+			Copyright © 2018 EasyWeb All rights reserved.
+		</div>
+		<!-- 手机屏幕遮罩层 -->
+		<div class="site-mobile-shade"></div>
+	</div>
+
+	<script type="text/javascript" src="/wc-management-web/assets/libs/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/wc-management-web/assets/libs/q.js"></script>
+	<script type="text/javascript" src="/wc-management-web/assets/libs/layui/layui.all.js"></script>
+	<script type="text/javascript" src="/wc-management-web/assets/js/comment.js"></script>
+	<script type="text/javascript" src="/wc-management-web/assets/js/cookie.js"></script>
+	<script type="text/javascript" src="/wc-management-web/assets/js/index.js"></script>
+	<!-- 侧导航渲染模板 -->
+	<script id="sideNav" type="text/html">
+		{{#  layui.each(d, function(index, item){ }}
+		<li class="layui-nav-item">
+			<a class="" href="javascript:openNavItem();"><i class="layui-icon">
+				{{# if(item.icon){ }}
+					item.icon
+				{{# }else{ }}
+					&#xe63c;
+				{{# } }}
+			</i>&emsp;<span>{{ item.name }}</span></a>
+			<dl class="layui-nav-child">
+				{{#  layui.each(item.childrens, function(index, subItem){ }}
+				<dd>
+					<a href="#!{{ subItem.uri }}">{{ subItem.name }}</a>
+				</dd>
+				{{#  }); }}
+			</dl>
+		</li>
+		{{#  }); }}
+	</script>
+	<!-- 修改密码弹窗 -->
+	<script type="text/html" id="pswModel">
+	<form id="pswForm" class="layui-form model-form" action="" method="put">
+		<div class="layui-form-item">
+			<label class="layui-form-label">旧密码</label>
+ 			<div class="layui-input-block">
+				<input name="oldPsw" placeholder="请输入旧密码" type="password" class="layui-input" maxlength="12" lay-verify="required|pass" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">新密码</label>
+ 			<div class="layui-input-block">
+				<input name="newPsw" placeholder="请输入新密码" type="password" class="layui-input" maxlength="12" lay-verify="required|pass" required />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">确认密码</label>
+ 			<div class="layui-input-block">
+				<input name="newPsw2" placeholder="请再次输入新密码" type="password" class="layui-input" maxlength="12" lay-verify="required|psw2" required />
+			</div>
+		</div>
+		<div class="layui-form-item model-form-footer">
+			<button class="layui-btn layui-btn-primary" type="button" id="pswCancel">取消</button>
+			<button class="layui-btn" lay-filter="pswSubmit" lay-submit>修改</button>
+		</div>
+	</form>
+	</script>
+</body>
+
+</html>

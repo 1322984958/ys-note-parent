@@ -1,0 +1,97 @@
+<div class="content-header">
+	<h2 class="content-title">系统管理</h2>
+	<span class="layui-breadcrumb"> <a href="#!home">首页</a> <a><cite>系统管理</cite></a>
+	</span>
+</div>
+
+<div>
+	<div class="layui-form toolbar">
+		<div class="layui-row">
+			<select id="category">
+				<option value="">-请选择类别-</option>
+				<option value="background">后台</option>
+				<option value="weixin">微信</option>
+				<option value="app">app</option>
+			</select>&emsp;		
+			<input id="name" class="layui-input search-input" type="text" placeholder="请输入名称" />&emsp;
+			<input id="value" class="layui-input search-input" type="text" placeholder="请输入值" />&emsp;
+			<select id="state">
+				<option value="">-请选择状态-</option>
+				<option value="1">正常</option>
+				<option value="2">删除</option>
+			</select>&emsp;		
+		</div>
+		<br>
+		<div class="layui-row">
+			<div class="layui-btn-group">
+				<button id="searchBtn" class="layui-btn search-btn "><i class="layui-icon">&#xe615;</i>搜索</button>
+				<button id="addBtn" class="layui-btn search-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+			</div>
+		</div>
+	</div>
+	<table class="layui-table" id="table" lay-filter="table"></table>
+</div>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="addModel">
+<div class="layer-form-wapper">
+	<form id="editForm" class="layui-form model-form" action="">
+		<input name="id" type="hidden" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">类别</label>
+ 			<div class="layui-input-block">
+	 			<input type="radio" name="category" value="background" title="后台" checked/>
+	 			<input type="radio" name="category" value="weixin" title="微信" />
+	 			<input type="radio" name="category" value="app" title="app" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+ 			<div class="layui-input-block">
+				<input name="name" placeholder="请输入名称" type="text" class="layui-input" maxlength="20" lay-verify="required"  />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">值</label>
+ 			<div class="layui-input-block">
+				<input name="value" placeholder="请输入值" type="text" class="layui-input" maxlength="20" lay-verify="required"  />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+ 			<div class="layui-input-block">
+	 			<input type="radio" name="state" value="1" title="正常" checked/>
+	 			<input type="radio" name="state" value="2" title="删除" />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">根路径</label>
+ 			<div class="layui-input-block">
+				<input name="basepath" placeholder="请输入根路径" type="text" class="layui-input" maxlength="100" lay-verify=""  />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">系统标题</label>
+ 			<div class="layui-input-block">
+				<input name="title" placeholder="请输入系统标题" type="text" class="layui-input" maxlength="20" lay-verify=""  />
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">排序</label>
+ 			<div class="layui-input-block">
+				<input name="orders" placeholder="请输入排序" type="text" class="layui-input" maxlength="5" lay-verify="required number"  />
+			</div>
+		</div>
+		<div class="layui-form-item model-form-footer">
+			<button class="layui-btn layui-btn-primary" type="button" id="btnCancel"  >取消</button>
+			<button class="layui-btn"  id="btnCancel" lay-filter="btnSubmit" lay-submit>保存</button>
+		</div>
+	</form>
+</div>
+</script>
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+	<a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/javascript" src="../assets/js/system/system.js"></script>

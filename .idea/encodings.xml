@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/ys-note-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ys-note-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ys-note-mapper" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ys-note-model" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ys-note-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ys-note-web" charset="UTF-8" />
+  </component>
+</project>

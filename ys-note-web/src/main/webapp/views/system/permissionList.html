@@ -1,0 +1,148 @@
+<div class="content-header">
+	<h2 class="content-title">权限管理</h2>
+	<span class="layui-breadcrumb"> <a href="#!home">首页</a> <a><cite>权限管理</cite></a>
+	</span>
+</div>
+
+<div>
+	<div class="layui-form toolbar">
+		搜索： <select id="searchKey">
+			<option value="">-请选择-</option>
+			<option value="a.permission_id">ID</option>
+			<option value="a.permission_name">名称</option>
+			<option value="a.permission_value">权限值</option>
+			<option value="b.permission_name">父级</option>
+		</select> <input id="searchValue" class="layui-input search-input" type="text"
+			placeholder="输入搜索内容" />
+		<button id="searchBtn" class="layui-btn search-btn">
+			<i class="layui-icon"></i>搜索
+		</button>
+		<button id="addBtn" class="layui-btn search-btn">
+			<i class="layui-icon"></i>添加
+		</button>
+	</div>
+
+<!-- 	<table class="layui-table" id="table" lay-filter="table"></table> -->
+	<div id="tree-grid" class="grid"></div>
+	
+</div>
+
+<script id="treegridView" type="text/html">
+  <table class="layui-table">
+    <thead>
+      <tr>
+        <th>权限名</th>
+        <th>权限值</th>
+        <th>类型</th>
+        <th>路径</th>
+        <th>图标</th>
+        <th>是否打开</th>
+        <th>排序</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{# layui.each(d.rows,function(index,r){ }}
+      <tr>
+        <td><input type="checkbox" />{{r.name}}</td>
+		<td>{{r.otherInfo.value||''}}</td>
+        <td>{{r.categoryName||''}}</td>
+        <td>{{r.otherInfo.uri}}</td>
+        <td>{{r.otherInfo.icon ||''}}</td>
+        <td>{{r.open?'打开':'不打开' }}</td>
+        <td>{{r.otherInfo.orders}}</td>
+      </tr>
+      {{# }); }}
+    </tbody>
+  </table>
+</script>
+
+<!-- 表单弹窗 -->
+<script type="text/html" id="addModel">
+<div class="layer-form-wapper">
+    <form id="editForm" class="layui-form model-form" action="">
+        <input name="id" type="hidden" />
+		<div class="layui-form-item">
+			<label class="layui-form-label">系统</label>
+ 			<div class="layui-input-block">
+				<select id="system-select" name="sysSystemVo.category" lay-verify="required">
+					<option value="background" select="select">后台用户</option>		
+					<option value="weixin">微信用户</option>		
+					<option value="app">手机app用户</option>		
+				</select>
+			</div>
+		</div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input name="name" placeholder="请输入名称" type="text" class="layui-input" maxlength="20" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限值</label>
+            <div class="layui-input-block">
+                <input name="value" placeholder="请输入权限值" type="text" class="layui-input" maxlength="20" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="category" lay-filter="permissionType" value="1" title="菜单" checked />
+                <input type="radio" name="category" lay-filter="permissionType" value="2" title="按钮" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">父级</label>
+            <div class="layui-input-block">
+                <select id="parent-select" name="parentId" lay-verify="required">
+                </select>   
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">路径</label>
+            <div class="layui-input-block">
+                <input name="uri" placeholder="请输入路径" type="text" class="layui-input" maxlength="100"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <input name="icon" placeholder="请输入图标" type="text" class="layui-input" maxlength="100"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否打开</label>
+            <div class="layui-input-block">
+                <input type="radio" name="open" value="0" title="不打开" />
+                <input type="radio" name="open" value="1" title="打开" checked/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序号</label>
+            <div class="layui-input-block">
+                <input name="orders" placeholder="请输入排序号" type="number" value="1" class="layui-input" lay-verify="number" required />
+            </div>
+        </div>
+        <div class="layui-form-item model-form-footer">
+            <button class="layui-btn layui-btn-primary" type="button" id="btnCancel">取消</button>
+            <button class="layui-btn" lay-filter="btnSubmit" lay-submit>保存</button>
+        </div>
+    </form>
+</div>
+</script>
+<!-- 表格操作列 -->
+<script type="text/html" id="barTpl">
+  <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 表格状态列 -->
+<script type="text/html" id="statusTpl">
+    <input type="checkbox" name="sex" lay-filter="statusCB" value="{{d.permissionId}}" lay-skin="switch" lay-text="正常|停用" {{ d.isDelete == 0 ? 'checked' : '' }}>
+</script>
+<!-- 目录select模板 -->
+<script id="parentsSelect" type="text/html">
+<option value="0">-请选择-</option>
+{{#  layui.each(d, function(index, item){ }}
+<option value="{{ item.id }}">{{ item.name }}</option>
+{{#  }); }}
+</script>
+<script type="text/javascript" src="../assets/js/system/permission.js"></script>

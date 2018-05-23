@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xmlns:cxf="http://cxf.apache.org/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd  
+		http://www.springframework.org/schema/context  
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd  
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd 
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/> 
+	
+	<!-- jax-rs endpoint定义 -->
+<!--     <jaxrs:server id="serviceContainer" address="/jaxrs"> -->
+<!--         <jaxrs:features> -->
+<!--             <cxf:logging /> -->
+<!--         </jaxrs:features> -->
+<!--         <jaxrs:serviceBeans> -->
+<!--             <ref bean="userJaxRsService" /> -->
+<!--         </jaxrs:serviceBeans> -->
+<!--         <jaxrs:extensionMappings> -->
+<!--             <entry key="feed" value="application/atom+xml" /> -->
+<!--             <entry key="json" value="application/json" /> -->
+<!--             <entry key="xml" value="application/xml" /> -->
+<!--             <entry key="html" value="text/html" /> -->
+<!--         </jaxrs:extensionMappings> -->
+<!--         <jaxrs:providers> -->
+<!--             <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJaxbJsonProvider" /> -->
+<!--         </jaxrs:providers> -->
+<!--     </jaxrs:server> -->
+ 	<!-- WebService的实现Bean定义  -->
+<!--     <bean id="userJaxRsService" class="com.gkgd.core.department.UserJaxRsService" /> -->
+	<bean id="GZIPFeature" class="org.apache.cxf.transport.common.gzip.GZIPFeature">
+        <property name="threshold">
+            <value>1</value>  
+        </property>
+	</bean>        
+	<cxf:bus>
+	    <cxf:features>
+	        <ref bean="GZIPFeature"></ref>
+	    </cxf:features>
+	</cxf:bus>
+	<!-- jax-ws endpoint定义  -->
+<!-- 	<jaxws:endpoint address="/LoginService"> -->
+<!-- 		<jaxws:implementor ref="loginService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/ApplicationService"> -->
+<!-- 		<jaxws:implementor ref="applicationService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/ApprovalAuditService"> -->
+<!-- 		<jaxws:implementor ref="approvalAuditService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/ApprovalService"> -->
+<!-- 		<jaxws:implementor ref="approvalService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/ApprovedTransCertService"> -->
+<!-- 		<jaxws:implementor ref="approvedTransCertService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/IllegalscoringSetService"> -->
+<!-- 		<jaxws:implementor ref="illegalscoringSetService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/IllegalPunishmentService"> -->
+<!-- 		<jaxws:implementor ref="illegalPunishmentService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/DregsSuperviseService"> -->
+<!-- 		<jaxws:implementor ref="dregsSuperviseService" /> -->
+<!-- 	</jaxws:endpoint> -->
+<!-- 	<jaxws:endpoint address="/NoticeService"> -->
+<!-- 		<jaxws:implementor ref="noticeService" /> -->
+<!-- 	</jaxws:endpoint> -->
+</beans>

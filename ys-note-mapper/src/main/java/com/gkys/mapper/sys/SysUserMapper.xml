@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gkys.mapper.sys.SysUserMapper">
+	  <resultMap id="BaseResultMap" type="com.gkys.model.sys.SysUser">
+	      <id column="id" property="id" />
+	      <result column="category" property="category"/>
+	      <result column="system_id" property="systemId"/>
+	      <result column="version" property="version"/>
+	      <result column="username" property="username"/>
+	      <result column="password" property="password"/>
+	      <result column="name" property="name"/>
+	      <result column="email" property="email"/>
+	      <result column="telephone" property="telephone"/>
+	      <result column="qq" property="qq"/>
+	      <result column="salt" property="salt"/>
+	      <result column="state" property="state"/>
+	      <result column="create_time" property="createTime"/>
+	      <result column="last_modify_time" property="lastModifyTime"/>
+	      <result column="description" property="description"/>
+	      <result column="portrait_img" property="portraitImg"/>
+	      <result column="delete_mark" property="deleteMark"/>
+	      <result column="pro_id" property="proId"/>
+	      <result column="city_id" property="cityId"/>
+	      <result column="area_id" property="areaId"/>
+	      <result column="pro_city_name" property="proCityName"/>
+	      <result column="location" property="location"/>
+	      <result column="orders" property="orders"/>
+	  </resultMap>
+
+	  <sql id="userRoleJoin">
+	    sys_user AS su
+			INNER JOIN sys_user_role AS sur ON su.id = sur.user_id
+			INNER JOIN sys_role AS sr ON sur.role_id = sr.id
+	  </sql>
+	  
+	  <sql id="userPermissionJoin">
+	    sys_user AS su
+			INNER JOIN sys_user_permission AS sup ON su.id = sup.user_id
+			INNER JOIN sys_permission AS sp ON sup.permission_id = sp.id
+	  </sql>
+	  
+	  <select id="selectRolesByUserId" resultType="com.gkys.model.sys.SysRole">
+	      SELECT sr.* FROM
+			<include refid="userRoleJoin"/>
+		  <where>
+		      <if test="userId != null and userId != ''">su.id=#{userId}</if>
+		  </where>
+	  </select>
+	  
+	  <select id="selectPermissionsByUserId" resultType="com.gkys.model.sys.SysPermission">
+	      SELECT sp.* FROM
+			  <include refid="userPermissionJoin"/>
+		  <where>
+		      <if test="userId != null and userId != ''">su.id=#{userId}</if>
+		  </where>
+	  </select>
+</mapper>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/jdbc
+    http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+    http://www.springframework.org/schema/cache
+    http://www.springframework.org/schema/cache/spring-cache.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 自动扫描包 ,将带有注解的类 纳入spring容器管理 -->
+    <context:component-scan base-package="com.gkys">
+    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+    
+    <!-- 启动aop注解基于类的代理（这时需要cglib库），如果proxy-target-class属值被设置为false或者这个属性被省略，那么标准的JDK 
+		基于接口的代理将起作用 -->
+	<aop:config proxy-target-class="false" />
+	<aop:aspectj-autoproxy />
+
+    <!-- 启动时初始化Spring上下文环境工具类 -->
+    <bean id="springContextUtil" class="com.gkys.common.util.SpringContextUtil"></bean>
+
+    <!-- 配置进行解密  -->
+    <bean id="propertyConfigurer" class="com.gkys.common.plugin.EncryptPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:properties/application.properties</value>
+                <value>classpath:properties/jdbc.properties</value>
+            </list>
+        </property>
+    </bean>
+
+   <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+          destroy-method="close">
+        <!-- 基本属性 url、user、password -->
+        <property name="driverClassName" value="${dataSource1.jdbc.driver}"/>
+        <property name="url" value="${dataSource1.jdbc.url}"/>
+        <property name="username" value="${dataSource1.jdbc.username}"/>
+        <property name="password" value="${encrypt.dataSource1.jdbc.password}"/>
+<!--         <property name="password" value="${dataSource1.jdbc.password}"/> -->
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        <property name="maxActive" value="30"/>
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="60000"/>
+        <property name="useUnfairLock" value="true"/><!--使用非公平锁--> 
+		<property name="removeAbandoned" value="true" /><!-- 超过时间限制是否回收 -->  
+		<property name="removeAbandonedTimeout" value="120" /> <!-- 超时时间；单位为秒。180秒=3分钟 -->  
+		<property name="logAbandoned" value="true" /><!-- 关闭abanded连接时输出错误日志 -->  
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/><!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="300000"/><!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="validationQueryTimeout" value="60"/><!-- 单位：秒  setQueryTimeout(int seconds)方法 -->
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <!-- 配置监控统计拦截的filters -->
+        <property name="filters" value="stat"/>
+    </bean>
+
+    <!-- 为Mybatis创建SqlSessionFactory，同时指定数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath*:com/gkys/**/*Mapper.xml"/>
+        <property name="typeAliasesPackage" value="com.gkys.model.sys,com.gkys.model.job" />
+    </bean>
+
+    <!-- Mapper接口所在包名，Spring会自动查找其下的Mapper -->
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.gkys.**.mapper"></property>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+
+    <!-- 事务管理器 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 启动注解事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+<!-- 	<import resource="classpath:cxf-servlet.xml"/> -->
+	<import resource="classpath*:applicationContext-scheduling.xml"/>
+    <import resource="classpath*:applicationContext-listener.xml"/>
+    <import resource="classpath*:applicationContext-common.xml"/>
+    <import resource="classpath*:applicationContext-activiti.xml"/>
+    <!--<bean id="configInfoUtil" class="com.gkgd.infra.util.ConfigInfoUtil" />-->
+    <!--  	<bean class="com.gkgd.infra.util.WeiXinUtil" init-method="init">  -->
+<!--   		<property name="configInfoUtil" ref="configInfoUtil"/> -->
+<!--   	</bean>   -->
+
+
+</beans>

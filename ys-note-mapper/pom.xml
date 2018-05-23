@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>ys-note-parent</groupId>
+		<artifactId>ys-note-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>ys-note-parent</groupId>
+	<artifactId>ys-note-mapper</artifactId>
+	<version>${ys-note-mapper.version}</version>
+	<name>ys-note-mapper</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>ys-note-parent</groupId>
+			<artifactId>ys-note-model</artifactId>
+			<version>${ys-note-model.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ys-note-parent</groupId>
+			<artifactId>ys-note-common</artifactId>
+			<version>${ys-note-common.version}</version>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gkys.mapper.sys.SysRolePermissionMapper">
+	  <resultMap id="BaseResultMap" type="com.gkys.model.sys.SysRolePermission">
+	      <id column="id" property="id" />
+	      <result column="version" property="version"/>
+	      <result column="create_time" property="createTime"/>
+	      <result column="description" property="description"/>
+	      <result column="role_id" property="roleId"/>
+	      <result column="category" property="category"/>
+	      <result column="permission_id" property="permissionId"/>
+	  </resultMap>
+
+</mapper>

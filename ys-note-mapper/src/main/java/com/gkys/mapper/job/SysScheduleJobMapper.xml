@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gkys.mapper.job.SysScheduleJobMapper">
+	  <resultMap id="BaseResultMap" type="com.gkys.model.job.SysScheduleJob">
+	      <id column="id" property="id" />
+	      <result column="version" property="version"/>
+	      <result column="job_name" property="jobName"/>
+	      <result column="job_group" property="jobGroup"/>
+	      <result column="cron" property="cron"/>
+	      <result column="is_local" property="isLocal"/>
+	      <result column="remote_request_method" property="remoteRequestMethod"/>
+	      <result column="remote_url" property="remoteUrl"/>
+	      <result column="bean_class" property="beanClass"/>
+	      <result column="method_name" property="methodName"/>
+	      <result column="params" property="params"/>
+	      <result column="is_async" property="isAsync"/>
+	      <result column="status" property="status"/>
+	      <result column="remarks" property="remarks"/>
+	      <result column="error" property="error"/>
+	      <result column="times" property="times"/>
+	      <result column="create_time" property="createTime"/>
+	      <result column="last_modify_time" property="lastModifyTime"/>
+	  </resultMap>
+	  
+</mapper>

@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="../assets/libs/zTree/css/metroStyle/metroStyle.css" type="text/css">
+
+<fieldset class="layui-elem-field layui-field-title" style="margin: 30px 0;">
+	<legend>组织机构</legend>
+</fieldset>
+
+<div class="layui-row">
+	<div class="layui-col-xs4">
+		<ul id="organization" class="ztree"></ul>
+	</div>
+	<div class="layui-col-xs8" style="background: white;padding: 50px;">
+		<form id="editForm" class="layui-form" action="">
+			<input type="hidden" name="id" />
+			<div class="layui-form-item">
+				<label class="layui-form-label">部门名称</label>
+				<div class="layui-input-block">
+					<input type="text" name="name" lay-verify="required" maxLength="30"
+						autocomplete="off" placeholder="请输入部门名称" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label">编码</label>
+				<div class="layui-input-block">
+					<input type="text" name="value" lay-verify="required" maxLength="30"
+						autocomplete="off" placeholder="请输入编码" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">描述</label>
+				<div class="layui-input-block">
+					<textarea placeholder="请输入描述" name="description" class="layui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+	            <label class="layui-form-label">状态</label>
+	            <div class="layui-input-block">
+	                <input type="radio" name="state" value="1" title="正常" />
+	                <input type="radio" name="state" value="2" title="禁用" checked/>
+	            </div>
+	        </div>
+	        <div class="layui-form-item">
+	            <label class="layui-form-label">排序号</label>
+	            <div class="layui-input-block">
+	                <input name="orders" placeholder="请输入排序号" type="number" value="1" class="layui-input" lay-verify="number" required />
+	            </div>
+	        </div>
+			<div class="layui-form-item" style="float: right;">
+				<button class="layui-btn" lay-submit="" lay-filter="btnSubmit">保存</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" src="../assets/libs/zTree/js/jquery.ztree.all-3.5.min.js"></script>
+<script type="text/javascript" src="../assets/js/system/organization.js"></script>
